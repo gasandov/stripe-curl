@@ -1,0 +1,63 @@
+1. Search for customerid
+2. If not customer
+3. Create customer
+4. Retrieve customer
+ 
+5. Create payment intent
+6. Create payment method
+7. Attach customer to payment method
+8. Confirm payment intent
+
+List payment methods con customer id
+
+curl https://api.stripe.com/v1/payment_methods \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K: \
+  -d type=card \
+  -d customer=cus_OCfh3S4KNvrBpa
+  -d "card[number]"=4242424242424242 \
+  -d "card[exp_month]"=8 \
+  -d "card[exp_year]"=2024 \
+  -d "card[cvc]"=314
+
+
+
+  // curl https://api.stripe.com/v1/customers/cus_OCfh3S4KNvrBpa \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K:
+
+  curl https://api.stripe.com/v1/payment_intents \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K: \
+  -d customer=cus_OCfh3S4KNvrBpa \
+  -d amount=5000 \
+  -d currency=usd \
+  -d setup_future_usage=on_session \
+  -d "automatic_payment_methods[enabled]"=true
+
+  curl https://api.stripe.com/v1/payment_methods \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K: \
+  -d type=card \
+  -d "card[number]"=6011000990139424 \
+  -d "card[exp_month]"=1 \
+  -d "card[exp_year]"=2025 \
+  -d "card[cvc]"=314
+
+
+  curl https://api.stripe.com/v1/payment_intents/pi_3NQHLVElN95plfCU0EzyYGKH/confirm \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K: \
+  -d payment_method=pm_card_visa \
+  -d return_url=https://example.com/success
+
+
+  curl -G https://api.stripe.com/v1/payment_methods \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K: \
+  -d customer=cus_OCfh3S4KNvrBpa \
+  -d type=card
+
+
+  pm_1NQHSLElN95plfCU7P8lL0dy
+
+curl https://api.stripe.com/v1/payment_methods/pm_1NQHSLElN95plfCU7P8lL0dy/attach \
+  -u sk_test_51IjIAlElN95plfCUGnlDH4nkMQUNhSOTUZIGegH2TGTvwJBzdNAkEHGl60YFdeFws598gIfcZzZ05s7cerIfmE2P00oD8FXU3K: \
+  -d customer=cus_OCfh3S4KNvrBpa
+
+
+https://example.com/order/123/complete?payment_intent=pi_3NQGBpElN95plfCU09bqlHfN&payment_intent_client_secret=pi_3NQGBpElN95plfCU09bqlHfN_secret_fKdX08vQgZMQqJT8SS3x3PvpY&redirect_status=succeeded
